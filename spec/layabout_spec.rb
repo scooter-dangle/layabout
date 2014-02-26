@@ -59,6 +59,8 @@ end
 <<MEH_NOTES
 
 # Sortof how things should work?
+
+## Sketch 1
 rect = Layabout.rect x: 15 do
   # Create instance variable named shield
   rect :shield, width: 10
@@ -69,5 +71,28 @@ end
 
 # Access the x coördinate of the shield rect
 rect.shield.x
+
+
+## Sketch 2
+rect = Layabout.rect do
+  rect :shield, width: 15, height: 15
+  
+  add_above :shield,
+    rect(:crest, width: 20, height: 10)
+
+  # Alternate syntax
+  shield.is_below rect(:crest,
+    width: 20, height: 10)
+
+  # Alternate syntax
+  shield.add_above rect(:crest,
+    width: 20, height: 10)
+
+  # Alternate syntax
+  rect :crest, width:20, height: 10
+  shield.below :crest
+end
+expect(rect.width ).to be(20)
+expect(rect.height).to be(25)
 
 MEH_NOTES
