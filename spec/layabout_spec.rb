@@ -2,18 +2,12 @@
 require File.expand_path('../../lib/layabout.rb', __FILE__)
 require 'pry'
 
-RSpec.configure do |c|
-  c.alias_example_to :expect_it
-end
-
-RSpec::Core::MemoizedHelpers.module_eval do
-  alias to     should
-  alias to_not should_not
-end
-
 
 describe RUBY_VERSION do
-  expect_it { to match(/^2\.\d\.\d$/) }
+  it do
+    expect(subject).to match(/^\d\.\d\.\d$/)
+    expect(subject).not_to match(/^1\.\d\.\d$/)
+  end
 end
 
 describe Layabout do
@@ -42,27 +36,38 @@ describe Layabout::Rect do
   end
 
   it do
+    outer_shield = BasicObject.new
     r = Layabout.rect do
-      rect :shield
+      rect :shield, width: 5
+      outer_shield = shield
     end
     expect(r).to respond_to(:shield)
     expect(r.shield).to be_a(Layabout::Rect)
+    expect(r.shield.width).to be(5)
+    expect(r.shield).to be(outer_shield)
+  end
+
+  it do
+    outer_shield = BasicObject.new
+    r = Layabout.rect do
+      rect :shield, width: 5
+    end
+
   end
 end
 
-rect = Layabout.rect x: 15 do
-  rect :shield, width: 10
-  shield.add_above(Layabout.rect align: :centered)
+<<MEH_NOTES
 
+# Sortof how things should work?
+rect = Layabout.rect x: 15 do
+  # Create instance variable named shield
+  rect :shield, width: 10
+
+  # Add another rectangle above shield rect
+  shield.add_above(Layabout.rect align: :centered)
 end
 
+# Access the x coördinate of the shield rect
 rect.shield.x
 
-<<MEH
-# Note: The following is idealized code for an unimplemented API
-
-, origin: [0, 0], reverse_axis: :y, quadrant: 3
-rect = Layabout::Rect.new(:svg) do
-end
-
-MEH
+MEH_NOTES
