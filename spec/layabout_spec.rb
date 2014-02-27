@@ -91,7 +91,36 @@ rect = Layabout.rect do
   # Alternate syntax
   rect :crest, width:20, height: 10
   shield.below :crest
+  
+  # Alternate syntax
+  add_above :shield,
+    rect(:crest, width: 20, height: 10)
+
+  # Alternate syntax
+  add :above, :shield,
+    rect(:crest, width: 20, height: 10)
+
+  # Alternate syntax
+  above :shield, add:
+    rect(:crest, width: 20, height: 10)
+
+  # Alternate syntax
+  above :shield, rect: [:crest, {width: 20, height: 10}]
 end
+expect(rect.width ).to be(20)
+expect(rect.height).to be(25)
+
+# Sketch 3
+[{type: :rect,
+  name: :shield,
+  width: 15,
+  height: 15},
+ {type: :rect,
+  name: :crest,
+  above: :shield,
+  width: 20,
+  height: 10}]
+
 expect(rect.width ).to be(20)
 expect(rect.height).to be(25)
 
