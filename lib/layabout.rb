@@ -21,9 +21,9 @@ module Layabout
       instance_exec &block if block_given?
     end
 
-    def rect name=nil, opts={}
+    def rect name=nil, opts={}, &block
       singleton_class.class_exec { attr_reader name }
-      out = instance_variable_set "@#{name}", Layabout.rect(opts)
+      out = instance_variable_set "@#{name}", Layabout.rect(opts, &block)
       @contents << out
       out
     end
