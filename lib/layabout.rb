@@ -17,12 +17,15 @@ module Layabout
       @height = height
       @x = x
       @y = y
+      @contents = []
       instance_exec &block if block_given?
     end
 
     def rect name=nil, opts={}
       singleton_class.class_exec { attr_reader name }
-      instance_variable_set "@#{name}", Layabout.rect(opts)
+      out = instance_variable_set "@#{name}", Layabout.rect(opts)
+      @contents << out
+      out
     end
   end
 end
