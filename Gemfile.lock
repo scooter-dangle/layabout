@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ZenTest (4.9.5)
+    notifier (0.4.1)
+    test_notifier (1.0.1)
+      notifier
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ZenTest
+  test_notifier
