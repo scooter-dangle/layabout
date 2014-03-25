@@ -1,1 +1,7 @@
+.rbx
 *.swp
+**.swp
+to-dos.markdown
+.NO_TEST_NOTIFIER
+.yardoc
+doc
